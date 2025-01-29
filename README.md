@@ -43,3 +43,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 
 - [Stitches CSS-in-JS](https://stitches.dev/) = npm install @stitches/react
       Add `<style id='stitches' dangerouslySetInnerHTML={{ __html: getCssText() }} />` to `<head>` for SSR
+
+- keen slider carrousel = npm install keen-slider
