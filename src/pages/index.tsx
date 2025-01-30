@@ -4,7 +4,7 @@ import { useKeenSlider } from 'keen-slider/react'
 
 import 'keen-slider/keen-slider.min.css'
 import { stripe } from '../lib/stripe'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Stripe from 'stripe'
 
 interface HomeProps {
@@ -33,7 +33,7 @@ export default function Home({ products }: HomeProps) {
 
             <footer>
               <strong>{product.name}</strong>
-              <span>R$ {product.price}</span>
+              <span>{product.price}</span>
             </footer>
           </Product>
         )
@@ -45,8 +45,13 @@ export default function Home({ products }: HomeProps) {
 // a way to load information from the server side
 // recommended for sensitive code (authentication, database)
 // CAUTION: it can slow down the loading of the entire page
+// export const getServerSideProps: GetServerSideProps = async () => {
 
-export const getServerSideProps: GetServerSideProps = async () => {
+// to get data that will not change often
+// in dev environment it'll work exactly like "GetServerSideProps", must be tested in production or running build
+// since it will only run on build, there's no access to current context info like, logged user, cookies, headers
+// if the request needs a cookie or info from logged user, then it'll not work using "GetStaticProps"
+export const getStaticProps: GetStaticProps = async () => {
   // expand is getting information from another related entity from database
   // in this case, default_price is the id from the related entity, price
   const response = await stripe.products.list({
@@ -61,7 +66,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: (price.unit_amount ?? 0) / 100,
+      price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format((price.unit_amount ?? 0) / 100),
     }
   })
 
@@ -69,5 +77,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       products,
     },
+    revalidate: 60 * 60 * 2, // numbers in seconds, this static component will update every 2 hours
   }
 }
