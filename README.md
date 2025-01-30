@@ -45,3 +45,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
       Add `<style id='stitches' dangerouslySetInnerHTML={{ __html: getCssText() }} />` to `<head>` for SSR
 
 - keen slider carrousel = npm install keen-slider
+
+- Stripe = npm i stripe
