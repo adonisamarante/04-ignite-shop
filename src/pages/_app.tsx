@@ -12,8 +12,8 @@ import { useRouter } from 'next/router'
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter()
-  const isHomePage = router.pathname === '/'
+  const { pathname } = useRouter()
+  const isHomePage = pathname === '/'
 
   return (
     <Container>
