@@ -4,8 +4,9 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/src/styles/pages/product'
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 
 interface ProductProps {
@@ -19,6 +20,12 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <p>Loading...</p>
+  }
+
   return (
     <ProductContainer>
       <ImageContainer>
@@ -37,14 +44,30 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
+// for static pages that receive params, getStaticPaths is required
+export const getStaticPaths: GetStaticPaths = async () => {
+  // *request* getting mostly sold / accessed products
+
+  // having the mostly sold products, the others would get 404 with "fallback" false
+  // "fallback" true will get the id of the product that is not in the list
+  // and run "getStaticProps" to then generate a static page for that product
+  // in this case, must check "isFallback" in the Product component
+  // if not, the page will render with undefined product and crash
+  // you can also leave "paths" empty []
+  return {
+    paths: [{ params: { id: 'prod_RgPUpDA2datElu' } }],
+    fallback: true,
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   params,
 }) => {
-  const productId = String(params?.id)
+  const productId = params ? params.id : ''
 
   const product = await stripe.products.retrieve(productId, {
-    expand: ['default-price'],
+    expand: ['default_price'],
   })
 
   const price = product.default_price as Stripe.Price
