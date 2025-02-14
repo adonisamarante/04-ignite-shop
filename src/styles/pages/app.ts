@@ -14,3 +14,7 @@ export const Header = styled('header', {
   maxWidth: 1180,
   margin: '0 auto',
 })
+
+export const Sidebar = styled('aside', {
+  backgroundColor: '$gray800',
+})
