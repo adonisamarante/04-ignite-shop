@@ -9,13 +9,15 @@ import { GetStaticProps } from 'next'
 import Stripe from 'stripe'
 import Head from 'next/head'
 
+export interface IProduct {
+  id: string
+  name: string
+  imageUrl: string
+  price: string
+}
+
 interface HomeProps {
-  products: {
-    id: string
-    name: string
-    imageUrl: string
-    price: string
-  }[]
+  products: IProduct[]
 }
 
 export default function Home({ products }: HomeProps) {
