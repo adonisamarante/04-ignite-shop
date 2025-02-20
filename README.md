@@ -49,3 +49,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 - Stripe API(e-commerce) = npm i stripe
 
 - Axios = npm i axios
+
+- Shopping cart lib = npm i use-shopping-cart
