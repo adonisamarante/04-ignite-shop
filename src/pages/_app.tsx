@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
+import { Handbag } from '@phosphor-icons/react'
 
 import logoImg from '../assets/logo.svg'
 import { Container, Header, Overlay, Sidebar } from '../styles/pages/app'
@@ -29,7 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
           ) : (
             <Image src={logoImg} alt="" />
           )}
-          <button onClick={() => setOpenCart(true)}>Cart</button>
+          <div onClick={() => setOpenCart(true)}>
+            <Handbag size={24} weight="bold" color="#E1E1E6" />
+            <div />
+          </div>
         </Header>
 
         <Component {...pageProps} />
