@@ -2,16 +2,19 @@ import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
 
 import logoImg from '../assets/logo.svg'
-import { Container, Header, Sidebar } from '../styles/pages/app'
+import { Container, Header, Overlay, Sidebar } from '../styles/pages/app'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 // every time something happen, App will re-render, so it is recommended to
 // leave globalStyles() out of the App function because it's values don't change
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [openCart, setOpenCart] = useState(false)
+
   const { pathname } = useRouter()
   const isHomePage = pathname === '/'
 
@@ -26,12 +29,19 @@ export default function App({ Component, pageProps }: AppProps) {
           ) : (
             <Image src={logoImg} alt="" />
           )}
+          <button onClick={() => setOpenCart(true)}>Cart</button>
         </Header>
 
         <Component {...pageProps} />
-      </Container>
 
-      <Sidebar />
+        <Sidebar isOpen={openCart ? 'open' : 'closed'}>
+          <button onClick={() => setOpenCart(false)}>Close</button>
+        </Sidebar>
+        <Overlay
+          isVisible={openCart ? 'visible' : 'hidden'}
+          onClick={() => setOpenCart(false)}
+        />
+      </Container>
     </>
   )
 }
