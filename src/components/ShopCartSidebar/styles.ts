@@ -1,6 +1,6 @@
 import { styled } from '@/src/styles'
 
-export const Sidebar = styled('aside', {
+export const Container = styled('aside', {
   position: 'absolute',
   zIndex: 2,
   top: 0,
@@ -9,6 +9,7 @@ export const Sidebar = styled('aside', {
   height: '100vh',
   width: '30rem',
   backgroundColor: '$gray800',
+  padding: '1.5rem',
 
   transition: 'transform 0.3s ease-in-out',
 
@@ -20,6 +21,27 @@ export const Sidebar = styled('aside', {
       closed: {
         transform: 'translateX(100%)',
       },
+    },
+  },
+})
+
+export const CloseButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'end',
+  alignItems: 'center',
+
+  '#closeButton': {
+    width: 'fit-content',
+    background: 'transparent',
+
+    border: 0,
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '&:hover': {
+      cursor: 'pointer',
     },
   },
 })
