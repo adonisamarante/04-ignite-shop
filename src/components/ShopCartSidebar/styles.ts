@@ -1,6 +1,9 @@
 import { styled } from '@/src/styles'
 
 export const Container = styled('aside', {
+  display: 'flex',
+  flexDirection: 'column',
+
   position: 'absolute',
   zIndex: 2,
   top: 0,
@@ -9,7 +12,6 @@ export const Container = styled('aside', {
   height: '100vh',
   width: '30rem',
   backgroundColor: '$gray800',
-  padding: '1.5rem',
 
   transition: 'transform 0.3s ease-in-out',
 
@@ -25,10 +27,12 @@ export const Container = styled('aside', {
   },
 })
 
-export const CloseButtonContainer = styled('div', {
+export const CloseButtonWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'end',
   alignItems: 'center',
+
+  padding: '1.5rem',
 
   '#closeButton': {
     width: 'fit-content',
@@ -44,6 +48,24 @@ export const CloseButtonContainer = styled('div', {
       cursor: 'pointer',
     },
   },
+})
+
+export const CartInfoWrapper = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  padding: '0 3rem 3rem 3rem',
+
+  '#title': {
+    fontSize: '$lg',
+    lineHeight: '160%',
+    fontWeight: 'bold',
+  },
+})
+
+export const ItemsListWrapper = styled('div', {
+  marginTop: '2rem',
+  flex: 1,
 })
 
 export const Overlay = styled('div', {
