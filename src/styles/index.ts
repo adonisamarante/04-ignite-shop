@@ -25,9 +25,9 @@ export const {
     },
 
     fontSizes: {
-      md: '1,125rem', // 18
-      lg: '1,25rem', // 20
-      xl: '1,5rem', // 24
+      md: '1.125rem', // 18
+      lg: '1.25rem', // 20
+      xl: '1.5rem', // 24
       '2xl': '2rem', // 32
     },
   },
