@@ -5,6 +5,8 @@ import {
   CloseButtonWrapper,
   CartInfoWrapper,
   ItemsListWrapper,
+  TotalsWrapper,
+  CheckoutButton,
 } from './styles'
 import { ShopCartCard } from './components/ShopCartCard'
 
@@ -33,7 +35,18 @@ export function ShopCartSidebar({
             <ShopCartCard />
           </ItemsListWrapper>
 
-          <span style={{ marginTop: '2rem' }}>TESTE</span>
+          <TotalsWrapper>
+            <div className="quantity-total">
+              <span>Quantidade</span>
+              <span>3 Itens</span>
+            </div>
+            <div className="price-total">
+              <span>Valor total</span>
+              <span>R$ 270,00</span>
+            </div>
+          </TotalsWrapper>
+
+          <CheckoutButton>Finalizar compra</CheckoutButton>
         </CartInfoWrapper>
       </Container>
 

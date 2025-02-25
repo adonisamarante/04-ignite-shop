@@ -68,6 +68,63 @@ export const ItemsListWrapper = styled('div', {
   flex: 1,
 })
 
+export const TotalsWrapper = styled('div', {
+  width: '100%',
+  marginTop: '2rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.25rem',
+
+  '.quantity-total': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    'span:first-child': {
+      fontSize: 16,
+      lineHeight: '160%',
+    },
+    span: {
+      fontSize: '$md',
+      lineHeight: '160%',
+    },
+  },
+
+  '.price-total': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    'span:first-child': {
+      fontSize: 18,
+      lineHeight: '160%',
+      fontWeight: 'bold',
+    },
+    span: {
+      fontSize: '$xl',
+      lineHeight: '160%',
+      fontWeight: 'bold',
+    },
+  },
+})
+
+export const CheckoutButton = styled('button', {
+  height: '4.312rem',
+  backgroundColor: '$green500',
+  borderRadius: 8,
+  marginTop: '3.437rem',
+
+  fontSize: '$md',
+  fontWeight: 'bold',
+  lineHeight: '160%',
+  color: '$white',
+
+  '&:hover': {
+    backgroundColor: '$green300',
+  },
+})
+
 export const Overlay = styled('div', {
   position: 'fixed',
   top: 0,
