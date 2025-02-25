@@ -13,6 +13,7 @@ interface HeaderProps {
 export function Header({ handleOpenCart }: HeaderProps) {
   const { pathname } = useRouter()
   const isHomePage = pathname === '/'
+  const isSuccess = pathname === '/success'
 
   return (
     <StyledHeader>
@@ -23,10 +24,13 @@ export function Header({ handleOpenCart }: HeaderProps) {
       ) : (
         <Image src={logoImg} alt="" />
       )}
-      <div onClick={() => handleOpenCart(true)}>
-        <Handbag size={24} weight="bold" color="#E1E1E6" />
-        <div id="cartAmount">2</div>
-      </div>
+
+      {!isSuccess && (
+        <div onClick={() => handleOpenCart(true)}>
+          <Handbag size={24} weight="bold" color="#E1E1E6" />
+          <div id="cartAmount">2</div>
+        </div>
+      )}
     </StyledHeader>
   )
 }
