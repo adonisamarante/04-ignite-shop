@@ -6,6 +6,7 @@ import { Container } from '../styles/pages/app'
 import { useState } from 'react'
 import { Header } from '../components/Header'
 import { ShopCartSidebar } from '../components/ShopCartSidebar'
+import CartContext from '../contexts/CartContext'
 
 // every time something happen, App will re-render, so it is recommended to
 // leave globalStyles() out of the App function because it's values don't change
@@ -20,13 +21,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Container>
-        <Header handleOpenCart={handleOpenCart} />
+      <CartContext>
+        <Container>
+          <Header handleOpenCart={handleOpenCart} />
 
-        <Component {...pageProps} />
+          <Component {...pageProps} />
 
-        <ShopCartSidebar isOpen={openCart} handleOpenCart={handleOpenCart} />
-      </Container>
+          <ShopCartSidebar isOpen={openCart} handleOpenCart={handleOpenCart} />
+        </Container>
+      </CartContext>
     </>
   )
 }
