@@ -122,6 +122,7 @@ export const CheckoutButton = styled('button', {
 
   '&:hover': {
     backgroundColor: '$green300',
+    cursor: 'pointer',
   },
 })
 
