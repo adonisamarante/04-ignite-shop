@@ -9,12 +9,14 @@ import { GetStaticProps } from 'next'
 import Stripe from 'stripe'
 import Head from 'next/head'
 import { Handbag } from '@phosphor-icons/react'
+import { useShoppingCart } from 'use-shopping-cart'
+import type { Product as ShoppingCartProduct } from 'use-shopping-cart/core'
 
 export interface IProduct {
   id: string
   name: string
   imageUrl: string
-  price: string
+  price: number
 }
 
 interface HomeProps {
@@ -29,6 +31,8 @@ export default function Home({ products }: HomeProps) {
     },
   })
 
+  const { cartDetails, addItem } = useShoppingCart()
+
   function handleAddToCart(
     event: React.MouseEvent<HTMLButtonElement>,
     product: IProduct,
@@ -37,7 +41,17 @@ export default function Home({ products }: HomeProps) {
     event.stopPropagation()
 
     console.log(product.name)
+
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl,
+      currency: 'BRL',
+    } as ShoppingCartProduct)
   }
+
+  console.log('cart: ', cartDetails)
 
   return (
     <>
@@ -49,6 +63,11 @@ export default function Home({ products }: HomeProps) {
 
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
+          const price = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format((product.price ?? 0) / 100)
+
           return (
             // prefetch will work only on hover
             <Link
@@ -62,7 +81,7 @@ export default function Home({ products }: HomeProps) {
                 <footer>
                   <div>
                     <strong>{product.name}</strong>
-                    <span>{product.price}</span>
+                    <span>{price}</span>
                   </div>
 
                   <button onClick={(event) => handleAddToCart(event, product)}>
@@ -102,10 +121,7 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format((price.unit_amount ?? 0) / 100),
+      price: price.unit_amount,
     }
   })
 
