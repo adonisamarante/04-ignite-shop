@@ -10,7 +10,7 @@ const stripePromise = loadStripe(
 function CartContext({ children }: { children: ReactNode }) {
   return (
     <CartProvider
-      shouldPersist={false}
+      shouldPersist
       cartMode="checkout-session"
       stripe={stripePromise as unknown as string}
       currency="BRL"

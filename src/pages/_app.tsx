@@ -20,16 +20,14 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <>
-      <CartContext>
-        <Container>
-          <Header handleOpenCart={handleOpenCart} />
+    <CartContext>
+      <Container>
+        <Header handleOpenCart={handleOpenCart} />
 
-          <Component {...pageProps} />
+        <Component {...pageProps} />
 
-          <ShopCartSidebar isOpen={openCart} handleOpenCart={handleOpenCart} />
-        </Container>
-      </CartContext>
-    </>
+        <ShopCartSidebar isOpen={openCart} handleOpenCart={handleOpenCart} />
+      </Container>
+    </CartContext>
   )
 }
