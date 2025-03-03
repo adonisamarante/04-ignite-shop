@@ -66,6 +66,10 @@ export const CartInfoWrapper = styled('div', {
 export const ItemsListWrapper = styled('div', {
   marginTop: '2rem',
   flex: 1,
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
 })
 
 export const TotalsWrapper = styled('div', {
