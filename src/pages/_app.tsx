@@ -3,7 +3,6 @@ import { globalStyles } from '../styles/global'
 
 import { Container } from '../styles/pages/app'
 
-import { useState } from 'react'
 import { Header } from '../components/Header'
 import { ShopCartSidebar } from '../components/ShopCartSidebar'
 import CartContext from '../contexts/CartContext'
@@ -13,20 +12,14 @@ import CartContext from '../contexts/CartContext'
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [openCart, setOpenCart] = useState(false)
-
-  function handleOpenCart(value: boolean) {
-    setOpenCart(value)
-  }
-
   return (
     <CartContext>
       <Container>
-        <Header handleOpenCart={handleOpenCart} />
+        <Header />
 
         <Component {...pageProps} />
 
-        <ShopCartSidebar isOpen={openCart} handleOpenCart={handleOpenCart} />
+        <ShopCartSidebar />
       </Container>
     </CartContext>
   )

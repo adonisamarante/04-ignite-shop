@@ -9,21 +9,19 @@ import {
   CheckoutButton,
 } from './styles'
 import { ShopCartCard } from './components/ShopCartCard'
+import { useShoppingCart } from 'use-shopping-cart'
+import { Product } from 'use-shopping-cart/core'
 
-interface ShopCartSidebarProps {
-  isOpen: boolean
-  handleOpenCart: (value: boolean) => void
-}
+export function ShopCartSidebar() {
+  const { cartDetails, shouldDisplayCart, handleCloseCart } = useShoppingCart()
 
-export function ShopCartSidebar({
-  isOpen,
-  handleOpenCart,
-}: ShopCartSidebarProps) {
+  const cartProducts = cartDetails ? Object.values(cartDetails) : []
+
   return (
     <>
-      <Container isOpen={isOpen ? 'open' : 'closed'}>
+      <Container isOpen={shouldDisplayCart ? 'open' : 'closed'}>
         <CloseButtonWrapper>
-          <button id="closeButton" onClick={() => handleOpenCart(false)}>
+          <button id="closeButton" onClick={handleCloseCart}>
             <X size={24} weight="bold" color="#8D8D99" />
           </button>
         </CloseButtonWrapper>
@@ -32,7 +30,9 @@ export function ShopCartSidebar({
           <span id="title">Sacola de compras</span>
 
           <ItemsListWrapper>
-            <ShopCartCard />
+            {cartProducts.map((product: Product) => (
+              <ShopCartCard key={product.id} product={product} />
+            ))}
           </ItemsListWrapper>
 
           <TotalsWrapper>
@@ -51,8 +51,8 @@ export function ShopCartSidebar({
       </Container>
 
       <Overlay
-        isVisible={isOpen ? 'visible' : 'hidden'}
-        onClick={() => handleOpenCart(false)}
+        isVisible={shouldDisplayCart ? 'visible' : 'hidden'}
+        onClick={handleCloseCart}
       />
     </>
   )

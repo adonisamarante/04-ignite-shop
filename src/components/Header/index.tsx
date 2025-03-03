@@ -5,15 +5,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { Handbag } from '@phosphor-icons/react'
+import { useShoppingCart } from 'use-shopping-cart'
 
-interface HeaderProps {
-  handleOpenCart: (value: boolean) => void
-}
-
-export function Header({ handleOpenCart }: HeaderProps) {
+export function Header() {
   const { pathname } = useRouter()
   const isHomePage = pathname === '/'
   const isSuccess = pathname === '/success'
+
+  const { handleCartClick } = useShoppingCart()
 
   return (
     <StyledHeader>
@@ -26,7 +25,7 @@ export function Header({ handleOpenCart }: HeaderProps) {
       )}
 
       {!isSuccess && (
-        <button onClick={() => handleOpenCart(true)}>
+        <button onClick={handleCartClick}>
           <Handbag size={24} weight="bold" color="#E1E1E6" />
           <div id="cartAmount">2</div>
         </button>
