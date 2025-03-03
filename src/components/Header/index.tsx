@@ -26,10 +26,10 @@ export function Header({ handleOpenCart }: HeaderProps) {
       )}
 
       {!isSuccess && (
-        <div onClick={() => handleOpenCart(true)}>
+        <button onClick={() => handleOpenCart(true)}>
           <Handbag size={24} weight="bold" color="#E1E1E6" />
           <div id="cartAmount">2</div>
-        </div>
+        </button>
       )}
     </StyledHeader>
   )

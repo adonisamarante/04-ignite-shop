@@ -10,7 +10,7 @@ export const StyledHeader = styled('header', {
   alignItems: 'center',
   justifyContent: 'space-between',
 
-  div: {
+  button: {
     position: 'relative',
     height: '3rem',
     width: '3rem',
@@ -33,6 +33,10 @@ export const StyledHeader = styled('header', {
       top: '-0.65rem',
       right: '-0.65rem',
 
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+
       height: '1.75rem',
       width: '1.75rem',
 
@@ -40,6 +44,7 @@ export const StyledHeader = styled('header', {
       backgroundColor: '$green300',
       borderRadius: 50,
 
+      color: '$gray100',
       fontSize: '0.875rem',
       fontWeight: 'bold',
     },
