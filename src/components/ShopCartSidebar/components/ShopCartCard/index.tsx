@@ -1,14 +1,19 @@
+import { Product } from 'use-shopping-cart/core'
 import { Container, ImageWrapper, ProductInfoWrapper } from './styles'
 
-export function ShopCartCard() {
+interface ShopCartCardProps {
+  product: Product
+}
+
+export function ShopCartCard({ product }: ShopCartCardProps) {
   return (
     <Container>
       <ImageWrapper />
 
       <ProductInfoWrapper>
         <div>
-          <span className="shirt-name">Camiseta Beyond the Limits</span>
-          <span className="price">R$ 79,90</span>
+          <span className="shirt-name">{product.name}</span>
+          <span className="price">R$ {product.price}</span>
         </div>
 
         <button className="button-remove">Remover</button>
