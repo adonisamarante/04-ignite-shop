@@ -31,7 +31,7 @@ export default function Home({ products }: HomeProps) {
     },
   })
 
-  const { cartDetails, addItem } = useShoppingCart()
+  const { addItem } = useShoppingCart()
 
   function handleAddToCart(
     event: React.MouseEvent<HTMLButtonElement>,
@@ -39,8 +39,6 @@ export default function Home({ products }: HomeProps) {
   ) {
     event.preventDefault()
     event.stopPropagation()
-
-    console.log(product.name)
 
     addItem({
       id: product.id,
@@ -50,8 +48,6 @@ export default function Home({ products }: HomeProps) {
       currency: 'BRL',
     } as ShoppingCartProduct)
   }
-
-  console.log('cart: ', cartDetails)
 
   return (
     <>
