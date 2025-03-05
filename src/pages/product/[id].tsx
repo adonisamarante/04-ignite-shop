@@ -31,7 +31,7 @@ export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
   const { isFallback } = useRouter()
-  const { addItem } = useShoppingCart()
+  const { addItem, cartDetails } = useShoppingCart()
 
   if (isFallback) {
     return <p>Loading...</p>
@@ -43,6 +43,11 @@ export default function Product({ product }: ProductProps) {
   ) {
     event.preventDefault()
     event.stopPropagation()
+
+    const cartKeys = Object.keys(cartDetails || {})
+    const productExistsInCart = cartKeys.includes(product.id)
+
+    if (productExistsInCart) return
 
     addItem({
       id: product.id,

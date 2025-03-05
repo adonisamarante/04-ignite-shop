@@ -31,7 +31,7 @@ export default function Home({ products }: HomeProps) {
     },
   })
 
-  const { addItem } = useShoppingCart()
+  const { addItem, cartDetails } = useShoppingCart()
 
   function handleAddToCart(
     event: React.MouseEvent<HTMLButtonElement>,
@@ -39,6 +39,11 @@ export default function Home({ products }: HomeProps) {
   ) {
     event.preventDefault()
     event.stopPropagation()
+
+    const cartKeys = Object.keys(cartDetails || {})
+    const productExistsInCart = cartKeys.includes(product.id)
+
+    if (productExistsInCart) return
 
     addItem({
       id: product.id,
