@@ -11,13 +11,16 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Stripe from 'stripe'
+import { useShoppingCart } from 'use-shopping-cart'
+import type { Product as ShoppingCartProduct } from 'use-shopping-cart/core'
+import { IProduct } from '..'
 
 interface ProductProps {
   product: {
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
     description: string
     defaultPriceId: string
     currency: string
@@ -28,11 +31,29 @@ export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
   const { isFallback } = useRouter()
+  const { addItem } = useShoppingCart()
 
   if (isFallback) {
     return <p>Loading...</p>
   }
 
+  function handleAddToCart(
+    event: React.MouseEvent<HTMLButtonElement>,
+    product: IProduct,
+  ) {
+    event.preventDefault()
+    event.stopPropagation()
+
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl,
+      currency: 'BRL',
+    } as ShoppingCartProduct)
+  }
+
+  // TODO: remove
   async function handleBuyProduct() {
     try {
       setIsCreatingCheckoutSession(true)
@@ -78,7 +99,7 @@ export default function Product({ product }: ProductProps) {
 
           <button
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
+            onClick={(event) => handleAddToCart(event, product)}
           >
             Comprar agora
           </button>
