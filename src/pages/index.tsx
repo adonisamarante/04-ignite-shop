@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { Handbag } from '@phosphor-icons/react'
 import { useShoppingCart } from 'use-shopping-cart'
 import type { Product as ShoppingCartProduct } from 'use-shopping-cart/core'
+import { formatPrice } from '../utils/formatters'
 
 export interface IProduct {
   id: string
@@ -64,10 +65,7 @@ export default function Home({ products }: HomeProps) {
 
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
-          const price = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format((product.price ?? 0) / 100)
+          const price = formatPrice(product.price)
 
           return (
             // prefetch will work only on hover

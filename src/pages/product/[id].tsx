@@ -14,6 +14,7 @@ import Stripe from 'stripe'
 import { useShoppingCart } from 'use-shopping-cart'
 import type { Product as ShoppingCartProduct } from 'use-shopping-cart/core'
 import { IProduct } from '..'
+import { formatPrice } from '@/src/utils/formatters'
 
 interface ProductProps {
   product: {
@@ -36,6 +37,8 @@ export default function Product({ product }: ProductProps) {
   if (isFallback) {
     return <p>Loading...</p>
   }
+
+  const price = formatPrice(product.price)
 
   function handleAddToCart(
     event: React.MouseEvent<HTMLButtonElement>,
@@ -98,7 +101,7 @@ export default function Product({ product }: ProductProps) {
 
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <span>{price}</span>
 
           <p>{product.description}</p>
 
@@ -148,10 +151,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format((price.unit_amount ?? 0) / 100),
+        price: price.unit_amount,
         description: product.description,
         defaultPriceId: price.id,
         currency: price.currency,
