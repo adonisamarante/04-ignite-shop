@@ -11,11 +11,19 @@ import {
 import { ShopCartCard } from './components/ShopCartCard'
 import { useShoppingCart } from 'use-shopping-cart'
 import { Product } from 'use-shopping-cart/core'
+import { formatPrice } from '@/src/utils/formatters'
 
 export function ShopCartSidebar() {
-  const { cartDetails, shouldDisplayCart, handleCloseCart } = useShoppingCart()
+  const {
+    cartDetails,
+    shouldDisplayCart,
+    handleCloseCart,
+    cartCount,
+    totalPrice,
+  } = useShoppingCart()
 
   const cartProducts = cartDetails ? Object.values(cartDetails) : []
+  const totalOrderPrice = formatPrice(totalPrice || 0)
 
   return (
     <>
@@ -38,11 +46,13 @@ export function ShopCartSidebar() {
           <TotalsWrapper>
             <div className="quantity-total">
               <span>Quantidade</span>
-              <span>3 Itens</span>
+              <span>
+                {cartCount} {cartCount && cartCount > 1 ? 'Itens' : 'Item'}
+              </span>
             </div>
             <div className="price-total">
               <span>Valor total</span>
-              <span>R$ 270,00</span>
+              <span>{totalOrderPrice}</span>
             </div>
           </TotalsWrapper>
 
