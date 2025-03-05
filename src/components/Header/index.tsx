@@ -12,7 +12,7 @@ export function Header() {
   const isHomePage = pathname === '/'
   const isSuccess = pathname === '/success'
 
-  const { handleCartClick } = useShoppingCart()
+  const { handleCartClick, cartCount } = useShoppingCart()
 
   return (
     <StyledHeader>
@@ -27,7 +27,9 @@ export function Header() {
       {!isSuccess && (
         <button onClick={handleCartClick}>
           <Handbag size={24} weight="bold" color="#E1E1E6" />
-          <div id="cartAmount">2</div>
+          {cartCount && cartCount > 0 ? (
+            <div id="cartAmount">{cartCount}</div>
+          ) : null}
         </button>
       )}
     </StyledHeader>
