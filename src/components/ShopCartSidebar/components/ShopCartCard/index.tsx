@@ -1,6 +1,7 @@
 import { Product } from 'use-shopping-cart/core'
 import { Container, ImageWrapper, ProductInfoWrapper } from './styles'
 import { useShoppingCart } from 'use-shopping-cart'
+import { formatPrice } from '@/src/utils/formatters'
 
 interface ShopCartCardProps {
   product: Product
@@ -8,6 +9,7 @@ interface ShopCartCardProps {
 
 export function ShopCartCard({ product }: ShopCartCardProps) {
   const { removeItem } = useShoppingCart()
+  const price = formatPrice(product.price)
 
   return (
     <Container>
@@ -16,7 +18,7 @@ export function ShopCartCard({ product }: ShopCartCardProps) {
       <ProductInfoWrapper>
         <div>
           <span className="shirt-name">{product.name}</span>
-          <span className="price">R$ {product.price}</span>
+          <span className="price">{price}</span>
         </div>
 
         <button
