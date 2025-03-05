@@ -12,7 +12,7 @@ export const Container = styled('div', {
 export const ImageWrapper = styled('div', {
   background: 'green',
 
-  width: '6.375rem',
+  minWidth: '6.375rem',
   height: '5.812rem',
 
   borderRadius: 8,
@@ -23,6 +23,8 @@ export const ProductInfoWrapper = styled('div', {
   flexDirection: 'column',
   gap: '0.5rem',
 
+  overflow: 'hidden',
+
   div: {
     display: 'flex',
     flexDirection: 'column',
@@ -32,6 +34,9 @@ export const ProductInfoWrapper = styled('div', {
       fontSize: '$md',
       lineHeight: '160%',
       color: '$gray300',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
 
     '.price': {
