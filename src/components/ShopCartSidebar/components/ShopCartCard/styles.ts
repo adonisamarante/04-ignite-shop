@@ -10,12 +10,15 @@ export const Container = styled('div', {
 })
 
 export const ImageWrapper = styled('div', {
-  background: 'green',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
   minWidth: '6.375rem',
   height: '5.812rem',
-
   borderRadius: 8,
+
+  background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
 })
 
 export const ProductInfoWrapper = styled('div', {
