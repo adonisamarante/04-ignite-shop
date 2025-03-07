@@ -12,8 +12,13 @@ import { ShopCartCard } from './components/ShopCartCard'
 import { useShoppingCart } from 'use-shopping-cart'
 import { Product } from 'use-shopping-cart/core'
 import { formatPrice } from '@/src/utils/formatters'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 export function ShopCartSidebar() {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
+
   const {
     cartDetails,
     shouldDisplayCart,
@@ -24,6 +29,39 @@ export function ShopCartSidebar() {
 
   const cartProducts = cartDetails ? Object.values(cartDetails) : []
   const totalOrderPrice = formatPrice(totalPrice || 0)
+
+  async function handleBuyProducts(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
+    event.stopPropagation()
+
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      console.log('entrou')
+
+      const response = await axios.post('/api/checkout', {
+        products: cartProducts,
+      })
+
+      console.log('response', response)
+
+      const { checkoutUrl } = response.data
+
+      // checkoutUrl is returned from Stripe and will go to an external site
+      // in this situation is recommended to do this
+      window.location.href = checkoutUrl
+
+      // no need to do setIsCreatingCheckoutSession(false) here because
+      // the user will be redirected to another page anyways
+    } catch (err) {
+      console.log(err)
+
+      setIsCreatingCheckoutSession(false)
+
+      // TODO: conectar com alguma ferramenta de observabilidade (Datadog / Sentry)
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
 
   return (
     <>
@@ -56,7 +94,12 @@ export function ShopCartSidebar() {
             </div>
           </TotalsWrapper>
 
-          <CheckoutButton>Finalizar compra</CheckoutButton>
+          <CheckoutButton
+            onClick={(event) => handleBuyProducts(event)}
+            disabled={isCreatingCheckoutSession}
+          >
+            Finalizar compra
+          </CheckoutButton>
         </CartInfoWrapper>
       </Container>
 

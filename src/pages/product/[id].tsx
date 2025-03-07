@@ -4,12 +4,10 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/src/styles/pages/product'
-import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import Stripe from 'stripe'
 import { useShoppingCart } from 'use-shopping-cart'
 import type { Product as ShoppingCartProduct } from 'use-shopping-cart/core'
@@ -29,8 +27,6 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
   const { isFallback } = useRouter()
   const { addItem, cartDetails } = useShoppingCart()
 
@@ -61,33 +57,6 @@ export default function Product({ product }: ProductProps) {
     } as ShoppingCartProduct)
   }
 
-  // TODO: remove
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      // checkoutUrl is returned from Stripe and will go to an external site
-      // in this situation is recommended to do this
-      window.location.href = checkoutUrl
-
-      // no need to do setIsCreatingCheckoutSession(false) here because
-      // the user will be redirected to another page anyways
-    } catch (err) {
-      console.log(err)
-
-      setIsCreatingCheckoutSession(false)
-
-      // TODO: conectar com alguma ferramenta de observabilidade (Datadog / Sentry)
-      alert('Falha ao redirecionar ao checkout!')
-    }
-  }
-
   return (
     <>
       <Head>
@@ -105,10 +74,7 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button
-            disabled={isCreatingCheckoutSession}
-            onClick={(event) => handleAddToCart(event, product)}
-          >
+          <button onClick={(event) => handleAddToCart(event, product)}>
             Comprar agora
           </button>
         </ProductDetails>
